@@ -8,3 +8,6 @@ Team Member:
 Peter Dang
 Katie Richardson
 Nathan Russo
+
+General Technique using:
+Minimax Implementation  with depth of 5-10
