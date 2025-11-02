@@ -1,7 +1,0 @@
-# Compile in resources/nathan_russo_cs2_lab8_src
-javac -d bin tiles/model/*.java tiles/ptui/*.java tiles/gui/*.java
-
-# Run in resources/nathan_russo_cs2_lab8_src
-java -cp bin tiles.gui.TilesGUI TEST
-java -cp bin tiles.gui.TilesGUI EASY
-java -cp bin tiles.gui.TilesGUI NORMAL
