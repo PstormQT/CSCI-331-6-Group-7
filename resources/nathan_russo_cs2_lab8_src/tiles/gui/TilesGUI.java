@@ -1,5 +1,6 @@
 package tiles.gui;
 
+import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -16,8 +17,6 @@ import javafx.stage.Stage;
 import tiles.model.Direction;
 import tiles.model.Observer;
 import tiles.model.TilesModel;
-
-import java.util.List;
 
 public class TilesGUI extends Application implements Observer<TilesModel, String> {
     /** This declares the model */
@@ -222,7 +221,6 @@ public class TilesGUI extends Application implements Observer<TilesModel, String
     @Override
     public void update(TilesModel model, String message) {
         if ( Platform.isFxApplicationThread() ) {
-            System.out.print("HHH");
             // This changes the player's statistics.
             updateStatistics();
 
