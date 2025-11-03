@@ -3,29 +3,40 @@ import model  # make sure model.py is in the same folder
 
 class UI:
     def __init__(self):
-        self.model = model.model2048()
-        self.main = tk.Tk()
-        self.main.title("2048 with AI")
+        self.model = model.Board2048()
+        self.root = tk.Tk()
+        self.root.title("2048 with AI")
         self.currBoardUI = []
 
-        self.renderMove()
-        self.renderBoard()
+        
+    def start(self,mode: int):
+        self.model = model.Board2048()
+        for widget in self.root.winfo_children():
+            widget.destroy()
+        self.currBoardUI = []
 
-        self.main.mainloop()
+        if mode == 1:
+            self.renderMove()
+            self.renderBoard()
+            self.movementButtons()
+
+        self.root.mainloop()
 
     def renderMove(self):
-        reset = tk.Button(self.main, height=5, width=20, text="Reset Puzzle")
+        reset = tk.Button(self.root, height=5, width=20, text="reset", command = lambda : self.start(1))
         reset.grid(row=0, column=0, padx=5, pady=5)
 
-        AImode1 = tk.Button(self.main, height=5, width=20, text="AI Mode 1, TBD")
+        AImode1 = tk.Button(self.root, height=5, width=20, text="AI Mode 1, TBD")
         AImode1.grid(row=0, column=1, padx=5, pady=5)
 
-        AImode2 = tk.Button(self.main, height=5, width=20, text="AI Mode 2, TBD")
+        AImode2 = tk.Button(self.root, height=5, width=20, text="AI Mode 2, TBD")
         AImode2.grid(row=0, column=2, padx=5, pady=5)
+
+        
 
     def renderBoard(self):
         board = self.model.getBoard()
-        frame = tk.Frame(self.main, bg="black")
+        frame = tk.Frame(self.root, bg="black")
         frame.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
 
         for i in range(4):
@@ -40,11 +51,41 @@ class UI:
                     height=4,
                     font=("Helvetica", 20, "bold"),
                     bg=self.get_color(value),
-                    fg="white"
+                    fg="black"
                 )
-                cell.grid(row=i, column=j, padx=5, pady=5)  # FIXED: column not col
+                cell.grid(row=i, column=j, padx=5, pady=5)
                 holder.append(cell)
             self.currBoardUI.append(holder)
+
+    def movementButtons(self):
+        buttonFrame = tk.Frame(self.root, bg = "#4287f5")
+        buttonFrame.grid(row = 2, column = 1, columnspan = 1)
+
+        buttonUp = tk.Button(buttonFrame, text = "↑",width=4,height=2,font=("Helvetica", 20, "bold"), command = lambda : self.movementFunction(1))
+        buttonUp.grid(row = 0, column = 1)
+
+        buttonDown = tk.Button(buttonFrame, text = "↓", command = lambda : self.movementFunction(2),width=4,height=2,font=("Helvetica", 20, "bold"))
+        buttonDown.grid(row = 2, column = 1)
+
+        buttonLeft = tk.Button(buttonFrame, text = "←", command = lambda : self.movementFunction(3),width=4,height=2,font=("Helvetica", 20, "bold"))
+        buttonLeft.grid(row = 1, column = 0)
+
+        buttonRight = tk.Button(buttonFrame, text = "→", command = lambda : self.movementFunction(4),width=4,height=2,font=("Helvetica", 20, "bold"))
+        buttonRight.grid(row = 1, column = 2)
+
+
+    def movementFunction(self, direction: int):
+        self.model.playAction(direction)
+        self.updateBoard()
+
+    def updateBoard(self):
+        board = self.model.getBoard()
+        for i in range(4):
+            for j in range(4):
+                value = board[i][j]
+                text = str(value) if value != 0 else ""
+                uiboard = self.currBoardUI[i][j]
+                uiboard.config(text=text, bg=self.get_color(value))
 
     def get_color(self, value):
         """Return a background color based on the tile value."""
@@ -66,4 +107,5 @@ class UI:
 
 
 if __name__ == "__main__":
-    UI()
+    a = UI()
+    a.start(1)
