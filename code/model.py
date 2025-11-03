@@ -44,17 +44,12 @@ class Board2048:
                 self.board[y][x] = 2
             else:
                 self.board[y][x] = 4
-    
-
 
     """
-    def merge(self, row, col, delta) -> int:
-        points = 0
-        for i in range(self.MAX_BOARD_DIMENSION):
-            cor = None
-            while()
-        return points"""
-
+    Row - [Left, Right]
+    Col - [Bottom, Top]
+    Merging Right
+    """
     def merge(self, list_values):
         list_values = [v for v in list_values if v != 0]
         final_values = []
@@ -78,58 +73,31 @@ class Board2048:
             print(f"The game is over. Your prior score was {self.score}. You cannot move anymore.")
             print("Call reset() to start again.")
             return
-        
-        """movement = None
-        match direction:
-            case Direction.UP:
-                movement = (1, 0)
-            case Direction.Down:
-                movement = (-1, 0)
-            case Direction.LEFT:
-                movement = (0, -1)
-            case Direction.RIGHT:
-                movement = (0, 1)"""
-        
-        if direction == Direction.UP:
-            for i in range(self.MAX_BOARD_DIMENSION):
-                initial_values = []
-                for j in range(self.MAX_BOARD_DIMENSION - 1, -1, -1):
-                    initial_values.append(self.board[j][i])
+
+        if direction == Direction.UP.value:
+            for col in range(self.MAX_BOARD_DIMENSION):
+                initial_values = [self.board[row][col] for row in range(self.MAX_BOARD_DIMENSION - 1, -1, -1)]
                 final_values = self.merge(initial_values)
-                l = 0
-                for j in range(self.MAX_BOARD_DIMENSION - 1, -1, -1):
-                    self.board[j][i] = final_values[l]
-                    l += 1
-        elif direction == Direction.DOWN:
-            for i in range(self.MAX_BOARD_DIMENSION):
-                initial_values = []
-                for j in range (0, self.MAX_BOARD_DIMENSION, 1):
-                    initial_values.append(self.board[j][i])
+                for row in range(self.MAX_BOARD_DIMENSION):
+                    self.board[row][col] = final_values[3 - row]
+        elif direction == Direction.DOWN.value:
+            for col in range(self.MAX_BOARD_DIMENSION):
+                initial_values = [self.board[row][col] for row in range(self.MAX_BOARD_DIMENSION)]
                 final_values = self.merge(initial_values)
-                l = 0
-                for j in range (0, self.MAX_BOARD_DIMENSION, 1):
-                    self.board[j][i] = final_values[l]
-                    l += 1
-        elif direction == Direction.LEFT:
-            for i in range(self.MAX_BOARD_DIMENSION):
-                initial_values = []
-                for j in range(self.MAX_BOARD_DIMENSION - 1, -1, -1): 
-                    initial_values.append(self.board[i][j])
+                for row in range(self.MAX_BOARD_DIMENSION):
+                    self.board[row][col] = final_values[row]
+        elif direction == Direction.LEFT.value:
+            for row in range(self.MAX_BOARD_DIMENSION):
+                initial_values = [self.board[row][col] for col in range(self.MAX_BOARD_DIMENSION - 1, -1, -1)]
                 final_values = self.merge(initial_values)
-                l = 0
-                for j in range(self.MAX_BOARD_DIMENSION - 1, -1, -1): 
-                    self.board[j][i] = final_values[l]
-                    l += 1
-        elif direction == Direction.RIGHT:
-            for i in range(self.MAX_BOARD_DIMENSION):
-                initial_values = []
-                for j in range(0, self.MAX_BOARD_DIMENSION, 1):
-                    initial_values.append(self.board[i][j])
+                for col in range(self.MAX_BOARD_DIMENSION):
+                    self.board[row][col] = final_values[3 - col]
+        elif direction == Direction.RIGHT.value:
+            for row in range(self.MAX_BOARD_DIMENSION):
+                initial_values = [self.board[row][col] for col in range(self.MAX_BOARD_DIMENSION)]
                 final_values = self.merge(initial_values)
-                l = 0
-                for j in range(0, self.MAX_BOARD_DIMENSION, 1):
-                    self.board[j][i] = final_values[l]
-                    l += 1
+                for col in range(self.MAX_BOARD_DIMENSION):
+                    self.board[row][col] = final_values[col]
     
     def reset(self):
         self.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
@@ -145,10 +113,17 @@ class Board2048:
         return self.board
 
     def display(self):
+        print("--------------------")
+        print(f"Score: {self.score}")
         for i in range(self.MAX_BOARD_DIMENSION):
             for j in range(self.MAX_BOARD_DIMENSION):
                 print(f"{self.board[i][j]}  ", end='')
             print(" ")
+
+    def playAction(self, direction):
+        self.move(direction)
+        self.addTile()
+        self.display()
 
 def main():
     print("Starting 2048")
@@ -159,17 +134,13 @@ def main():
         direction = direction.lower()
         match direction:
             case "w":
-                game.move(1)
-                game.display()
+                game.playAction(1)
             case "s":
-                game.move(2)
-                game.display()
+                game.playAction(2)
             case "a":
-                game.move(3)
-                game.display()
+                game.playAction(3)
             case "d":
-                game.move(4)
-                game.display()
+                game.playAction(4)
 
 if __name__ == '__main__':
     main()
