@@ -101,7 +101,7 @@ class Board2048:
                 for col in range(self.MAX_BOARD_DIMENSION):
                     self.board[row][col] = final_values[col]
 
-        return original_board == self.board
+        return original_board != self.board
 
     def updateGameOver(self):
         for row in range(self.MAX_BOARD_DIMENSION):
