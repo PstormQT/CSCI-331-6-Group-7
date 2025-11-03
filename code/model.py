@@ -112,10 +112,10 @@ class Board2048:
         for i in range(self.MAX_BOARD_DIMENSION):
             for j in range(self.MAX_BOARD_DIMENSION - 1):
                 if (self.board[j][i] == self.board[j+1][i] or self.board[i][j] == self.board[i][j+1]):
-                    self.game_over = True
+                    self.game_over = False
                     return
 
-        self.game_over = False
+        self.game_over = True
     
     def reset(self):
         self.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
