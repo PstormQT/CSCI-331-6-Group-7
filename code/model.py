@@ -33,11 +33,7 @@ class Board2048:
 
     def addTile(self):
         open_cells = self.getAllOpenCells()
-        if open_cells == []:
-            print("Game Over")
-            print(f"Final Score: {self.score}")
-            self.game_over = True
-        else:
+        if open_cells != []:
             y, x = random.choice(open_cells)
             cell_num_prob = random.random()
             if cell_num_prob < self.TILE_2_CHANCE:
@@ -165,6 +161,8 @@ def main():
                 game.playActionCLI(3)
             case "d":
                 game.playActionCLI(4)
+    print("Game Over")
+    print(f"Final Score: {game.score}")
 
 if __name__ == '__main__':
     main()
