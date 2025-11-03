@@ -125,11 +125,14 @@ class Board2048:
         self.addTile()
         self.addTile()
 
+    def getBoard(self) -> list:
+        return self.board
+
     def getScore(self) -> int:
         return self.score
     
-    def getBoard(self) -> list:
-        return self.board
+    def getBoard(self) -> bool:
+        return self.game_over
 
     def displayCLI(self):
         print("----------------------------------------")
