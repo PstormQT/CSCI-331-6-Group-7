@@ -101,6 +101,21 @@ class Board2048:
                 final_values = self.merge(initial_values)
                 for col in range(self.MAX_BOARD_DIMENSION):
                     self.board[row][col] = final_values[col]
+
+    def updateGameOver(self):
+        for row in range(self.MAX_BOARD_DIMENSION):
+            for col in range(self.MAX_BOARD_DIMENSION):
+                if (self.board[row][col] == 0):
+                    self.game_over = False
+                    return
+                
+        for i in range(self.MAX_BOARD_DIMENSION):
+            for j in range(self.MAX_BOARD_DIMENSION - 1):
+                if (self.board[j][i] == self.board[j+1][i] or self.board[i][j] == self.board[i][j+1]):
+                    self.game_over = True
+                    return
+
+        self.game_over = False
     
     def reset(self):
         self.board = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
@@ -126,10 +141,12 @@ class Board2048:
     def playAction(self, direction):
         self.move(direction)
         self.addTile()
+        self.updateGameOver()
     
     def playActionCLI(self, direction):
         self.move(direction)
         self.addTile()
+        self.updateGameOver()
         self.displayCLI()
 
 def main():
