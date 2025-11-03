@@ -131,7 +131,7 @@ class Board2048:
     def getScore(self) -> int:
         return self.score
     
-    def getBoard(self) -> bool:
+    def getGameOver(self) -> bool:
         return self.game_over
 
     def displayCLI(self):
