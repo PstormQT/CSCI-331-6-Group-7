@@ -83,6 +83,7 @@ class UI:
     def movementFunction(self, direction: int):
         self.model.playAction(direction)
         self.updateBoard()
+        self.updateScore()
 
     def updateScore(self):
         self.currentScore.config(text = f"Current Score: {self.model.getScore()}")
