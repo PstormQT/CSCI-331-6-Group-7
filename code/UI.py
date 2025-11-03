@@ -16,27 +16,30 @@ class UI:
         self.currBoardUI = []
 
         if mode == 1:
-            self.renderMove()
+            self.renderMode()
             self.renderBoard()
             self.movementButtons()
 
         self.root.mainloop()
 
-    def renderMove(self):
-        reset = tk.Button(self.root, height=5, width=20, text="reset", command = lambda : self.start(1))
+    def renderMode(self):
+        mode = tk.Frame(self.root)
+        mode.grid(row = 0, column = 0)
+
+        reset = tk.Button(mode, height=5, width=20, text="reset", command = lambda : self.start(1))
         reset.grid(row=0, column=0, padx=5, pady=5)
 
-        AImode1 = tk.Button(self.root, height=5, width=20, text="AI Mode 1, TBD")
+        AImode1 = tk.Button(mode, height=5, width=20, text="AI Mode 1, TBD")
         AImode1.grid(row=0, column=1, padx=5, pady=5)
 
-        AImode2 = tk.Button(self.root, height=5, width=20, text="AI Mode 2, TBD")
+        AImode2 = tk.Button(mode, height=5, width=20, text="AI Mode 2, TBD")
         AImode2.grid(row=0, column=2, padx=5, pady=5)
 
         
 
     def renderBoard(self):
         board = self.model.getBoard()
-        frame = tk.Frame(self.root, bg="black")
+        frame = tk.Frame(self.root)
         frame.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
 
         for i in range(4):
@@ -58,8 +61,8 @@ class UI:
             self.currBoardUI.append(holder)
 
     def movementButtons(self):
-        buttonFrame = tk.Frame(self.root, bg = "#4287f5")
-        buttonFrame.grid(row = 2, column = 1, columnspan = 1)
+        buttonFrame = tk.Frame(self.root, bg = "#4287f5", padx= 20, pady = 20)
+        buttonFrame.grid(row = 0, column = 1)
 
         buttonUp = tk.Button(buttonFrame, text = "↑",width=4,height=2,font=("Helvetica", 20, "bold"), command = lambda : self.movementFunction(1))
         buttonUp.grid(row = 0, column = 1)
