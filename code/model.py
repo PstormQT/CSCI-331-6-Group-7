@@ -1,5 +1,5 @@
 from enum import Enum
-import random
+import copy, random
 
 class Direction(Enum):
     UP = 1
@@ -66,12 +66,15 @@ class Board2048:
 
     """
     This moves the pieces on the board in the desired direction.
+    Returns if the board changed
     """
-    def move(self, direction):
+    def move(self, direction) -> bool:
         if self.game_over:
             print(f"The game is over. Your prior score was {self.score}. You cannot move anymore.")
             print("Call reset() to start again.")
-            return
+            return False
+
+        original_board = copy.deepcopy(self.board)
 
         if direction == Direction.UP.value:
             for col in range(self.MAX_BOARD_DIMENSION):
@@ -97,6 +100,8 @@ class Board2048:
                 final_values = self.merge(initial_values)
                 for col in range(self.MAX_BOARD_DIMENSION):
                     self.board[row][col] = final_values[col]
+
+        return original_board != self.board
 
     def updateGameOver(self):
         for row in range(self.MAX_BOARD_DIMENSION):
@@ -135,14 +140,16 @@ class Board2048:
             print(" ")
 
     def playAction(self, direction):
-        self.move(direction)
-        self.addTile()
-        self.updateGameOver()
+        changed = self.move(direction)
+        if (changed):
+            self.addTile()
+            self.updateGameOver()
     
     def playActionCLI(self, direction):
-        self.move(direction)
-        self.addTile()
-        self.updateGameOver()
+        changed = self.move(direction)
+        if (changed):
+            self.addTile()
+            self.updateGameOver()
         self.displayCLI()
 
 def main():
