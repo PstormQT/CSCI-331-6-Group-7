@@ -46,9 +46,9 @@ class Board2048:
                 self.board[y][x] = 4
 
     """
-    Row - [Left, Right]
-    Col - [Bottom, Top]
-    Merging Right
+    Row - [Left, Right], Col - [Bottom, Top]
+    This merges and combines numbers from right to right.
+    It start are the right and merges values in the right direction.
     """
     def merge(self, list_values):
         list_values = [v for v in list_values if v != 0]
@@ -68,6 +68,9 @@ class Board2048:
         final_values.reverse()
         return final_values
 
+    """
+    This moves the pieces on the board in the desired direction.
+    """
     def move(self, direction):
         if self.game_over:
             print(f"The game is over. Your prior score was {self.score}. You cannot move anymore.")
@@ -112,8 +115,8 @@ class Board2048:
     def getBoard(self) -> list:
         return self.board
 
-    def display(self):
-        print("--------------------")
+    def displayCLI(self):
+        print("----------------------------------------")
         print(f"Score: {self.score}")
         for i in range(self.MAX_BOARD_DIMENSION):
             for j in range(self.MAX_BOARD_DIMENSION):
@@ -123,24 +126,28 @@ class Board2048:
     def playAction(self, direction):
         self.move(direction)
         self.addTile()
-        self.display()
+    
+    def playActionCLI(self, direction):
+        self.move(direction)
+        self.addTile()
+        self.displayCLI()
 
 def main():
     print("Starting 2048")
     game = Board2048()
-    game.display()
+    game.displayCLI()
     while (not game.game_over):
-        direction = input("Give us a direction: North is W, South is S, Left is A, Right is D: ")
+        direction = input("Give a direction using WASD: North is 'W', South is 'S', Left is 'A', Right is 'D': ")
         direction = direction.lower()
         match direction:
             case "w":
-                game.playAction(1)
+                game.playActionCLI(1)
             case "s":
-                game.playAction(2)
+                game.playActionCLI(2)
             case "a":
-                game.playAction(3)
+                game.playActionCLI(3)
             case "d":
-                game.playAction(4)
+                game.playActionCLI(4)
 
 if __name__ == '__main__':
     main()
