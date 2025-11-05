@@ -14,7 +14,7 @@ Team Members:
 
 ## Artificial Intelligence Implementation Techniques:
 1. Expectiminimax with Alpha - Beta Pruning
-    -   We will use a modification of minimax (Expectiminimax) due to the nature of 2048. 
+    We will use a modification of minimax (Expectiminimax) due to the nature of 2048. 
         Technically, there is only one actual player who is "playing the game", so to get 
         around this, we have set the max and min players as follows:
         -   Max Node Player (MaxNP): Normal player who is sliding and merging tiles
@@ -25,13 +25,13 @@ Team Members:
     mimic the randomness nature of the tile spawning the tiles in 2048.
 
 2. Monte Carlo Tree Search 
-    -   ~~Peter is still doing research on this but this is his understand in general~~
+    ~~Peter is still doing research on this but this is his understand in general~~
 
-    -   Monte Carlo Search Tree is a search method similar to the Expectiminimax with an 
-        emphasis on only expanding on the best state. 
+    Monte Carlo Search Tree is a search method similar to the Expectiminimax with an 
+    emphasis on only expanding on the best state. 
         
-    -   This will run faster and deeper comparing to Expectiminimax due to it doesn't have to
-        expand the node that is less valuable
+    This will run faster and deeper comparing to Expectiminimax due to it doesn't have to
+    expand the node that is less valuable
 
 ## Resource used
 1. 2048 Game in general 
