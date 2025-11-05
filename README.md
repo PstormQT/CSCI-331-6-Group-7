@@ -26,6 +26,7 @@ Team Members:
     mimic the randomness nature of the tile spawning the tiles in 2048.
 
 2. Monte Carlo Tree Search 
+
     ~~Peter is still doing research on this but this is his understand in general~~
 
     Monte Carlo Search Tree is a search method similar to the Expectiminimax with an 
