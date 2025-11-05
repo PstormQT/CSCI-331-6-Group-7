@@ -3,6 +3,8 @@ import model
 import ai
 
 class UI:
+    SEARCH_DEPTH = 3
+
     def __init__(self):
         self.model = model.Board2048()
         self.root = tk.Tk()
@@ -44,7 +46,7 @@ class UI:
             return
 
         # Search Tree depth of 3
-        nextMove = ai.getNextMove(self.model,3)
+        nextMove = ai.getNextMove(self.model, self.SEARCH_DEPTH)
         self.movementFunction(nextMove)
 
         # Running at max speed (timing out at 10ms)
