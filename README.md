@@ -14,6 +14,7 @@ Team Members:
 
 ## Artificial Intelligence Implementation Techniques:
 1. Expectiminimax with Alpha - Beta Pruning
+
     We will use a modification of minimax (Expectiminimax) due to the nature of 2048. 
         Technically, there is only one actual player who is "playing the game", so to get 
         around this, we have set the max and min players as follows:
