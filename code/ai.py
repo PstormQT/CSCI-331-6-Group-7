@@ -1,11 +1,9 @@
-# ai.py
 import copy
 import model
-import math
 
 INF = float("inf")
 
-# Init block placement
+# Init block placement used to calculate the heurisitic
 PERFECT_SNAKE = [
     [2**15, 2**14, 2**13, 2**12],
     [2**8,  2**9,  2**10, 2**11],
@@ -14,9 +12,9 @@ PERFECT_SNAKE = [
 ]
 
 
-def snakeHeuristic(board) -> int:
+def getHeurisiticScore(board) -> int:
     """
-    _summary_: Scoring function of how the current board from the perfect game
+    summary_ Scoring function of how the current board from the perfect game
 
     Args:
         board_obj (Board2048): The board for 2048
@@ -24,13 +22,13 @@ def snakeHeuristic(board) -> int:
     Returns:
         int: Score value on how identical of the current board to the perfect board
     """
-    h = 0
+    board_heurisitic = 0
     grid = board.getBoard()
     size = board.MAX_BOARD_DIMENSION
     for i in range(size):
         for j in range(size):
-            h += grid[i][j] * PERFECT_SNAKE[i][j]
-    return h
+            board_heurisitic += grid[i][j] * PERFECT_SNAKE[i][j]
+    return board_heurisitic 
 
 def getNextMove(board, depth):
     """
@@ -78,7 +76,7 @@ def expectiminimax(board, depth, playerTurn):
 
     # Check if game over or depth = 0
     if board.getGameOver() or depth <= 0:
-        return snakeHeuristic(board)
+        return getHeurisiticScore(board)
 
     # Run max for player
     if playerTurn:
@@ -99,14 +97,14 @@ def expectiminimax(board, depth, playerTurn):
 
         # Check if all future states are dead -> return raw score
         if not moveCheck:
-            return snakeHeuristic(board)
+            return getHeurisiticScore(board)
         return maxScore
 
     else:
         # Running for min node, spawning 2 or 4 tile in all possible location and return their average
         openCells = board.getAllOpenCells()
         if not openCells:
-            return snakeHeuristic(board)
+            return getHeurisiticScore(board)
 
         total_expected = 0.0
         p2 = 0.9
