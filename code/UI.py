@@ -1,5 +1,7 @@
 import tkinter as tk
-import model  # make sure model.py is in the same folder
+import model
+import ai
+import time
 
 class UI:
     def __init__(self):
@@ -8,32 +10,64 @@ class UI:
         self.root.title("2048 with AI")
         self.currBoardUI = []
         self.currentScore = None
-
         
     def start(self,mode: int):
+        """
+        _summary_: The starter for the game, init all of the component depend on the mode
+
+        Args:
+            mode (int): What mode to run
+                        1: Manual
+                        2: ExpectiMinimax
+                        3: Monte Carlo 
+        """
         self.model = model.Board2048()
         for widget in self.root.winfo_children():
             widget.destroy()
         self.currBoardUI = []
 
+        # Manual Mode
         if mode == 1:
             self.renderMode()
             self.renderBoard()
             self.movementButtons()
 
+        elif mode == 2:
+            self.renderMode()
+            self.renderBoard()
+            self.runMiniMax()
+            
         self.root.mainloop()
 
+    def runMiniMax(self):
+        """
+        _summary_: Run the Minimax Simulation 
+        """
+        if self.model.getGameOver():
+            self.currentScore.config(text=f"GAME OVER, Score: {self.model.getScore()}")
+            return
+
+        # Search Tree depth of 3
+        nextMove = ai.getNextMove(self.model,3)
+        self.movementFunction(nextMove)
+
+        # Running at max speed (timing out at 10ms)
+        self.root.after(10, self.runMiniMax)
+
     def renderMode(self):
+        """
+        _summary_: Spawning all of the input buttons for the game
+        """
         mode = tk.Frame(self.root)
         mode.grid(row = 0, column = 0, columnspan = 5)
 
-        reset = tk.Button(mode, height=5, width=20, text="reset", command = lambda : self.start(1))
+        reset = tk.Button(mode, height=5, width=20, text="Manual Playing", command = lambda : self.start(1))
         reset.grid(row=0, column=1, padx=5, pady=5)
 
-        AImode1 = tk.Button(mode, height=5, width=20, text="AI Mode 1, TBD")
+        AImode1 = tk.Button(mode, height=5, width=20, text="AI Mode 1\nExpectiminimax", command = lambda : self.start(2))
         AImode1.grid(row=0, column=2, padx=5, pady=5)
 
-        AImode2 = tk.Button(mode, height=5, width=20, text="AI Mode 2, TBD")
+        AImode2 = tk.Button(mode, height=5, width=20, text="AI Mode 2\nMonte Carlo Search Tree\nIn development")
         AImode2.grid(row=0, column=3, padx=5, pady=5)
 
         self.currentScore = tk.Label(mode, height = 5, width = 20, text = f"Current Score: {self.model.getScore()}")
@@ -41,6 +75,9 @@ class UI:
         
 
     def renderBoard(self):
+        """
+        _summary_: Render the board itself
+        """
         board = self.model.getBoard()
         frame = tk.Frame(self.root, bg = "#000000")
         frame.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
@@ -64,6 +101,9 @@ class UI:
             self.currBoardUI.append(holder)
 
     def movementButtons(self):
+        """
+        _summary_: Render the button for manual mode
+        """
         buttonFrame = tk.Frame(self.root, bg = "#4287f5", padx= 20, pady = 20)
         buttonFrame.grid(row = 1, column = 4)
 
@@ -81,6 +121,16 @@ class UI:
 
 
     def movementFunction(self, direction: int):
+        """
+        _summary_: Trigger the movement for the board
+
+        Args:
+            direction (int): input for the movement
+                                1: Up
+                                2: Down
+                                3: Left
+                                4: Right
+        """
         self.model.playAction(direction)
         self.updateBoard()
         if self.model.getGameOver():
@@ -89,9 +139,15 @@ class UI:
             self.updateScore()    
 
     def updateScore(self):
+        """
+        _summary_: Update the score for the UI
+        """
         self.currentScore.config(text = f"Current Score: {self.model.getScore()}")
 
     def updateBoard(self):
+        """
+        _summary_: Update the board for the UI
+        """
         board = self.model.getBoard()
         for i in range(4):
             for j in range(4):
@@ -100,8 +156,16 @@ class UI:
                 uiboard = self.currBoardUI[i][j]
                 uiboard.config(text=text, bg=self.get_color(value))
 
-    def get_color(self, value):
-        """Return a background color based on the tile value."""
+    def get_color(self, value: int):
+        """
+        _summary_: Getting the color value for the number
+
+        Args:
+            value (int): the integer to get the value
+
+        Returns:
+            str: the color
+        """
         colors = {
             0: "#cdc1b4",
             2: "#eee4da",
@@ -114,7 +178,8 @@ class UI:
             256: "#edcc61",
             512: "#edc850",
             1024: "#edc53f",
-            2048: "#edc22e"
+            2048: "#edc22e",
+            4096: "#cbc3e3"
         }
         return colors.get(value, "#3c3a32")
 

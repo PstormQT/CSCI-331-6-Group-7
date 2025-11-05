@@ -23,6 +23,9 @@ class Board2048:
         self.addTile()
         self.addTile()
 
+    def setBoard(self, board: list):
+        self.board = board
+
     def getAllOpenCells(self):
         open_cells = []
         for y in range(self.MAX_BOARD_DIMENSION):
