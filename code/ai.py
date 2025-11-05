@@ -14,7 +14,7 @@ PERFECT_SNAKE = [
 
 def getHeurisiticScore(board) -> int:
     """
-    summary_ Scoring function of how the current board from the perfect game
+    Scoring function of how the current board from the perfect game
 
     Args:
         board_obj (Board2048): The board for 2048
@@ -32,7 +32,7 @@ def getHeurisiticScore(board) -> int:
 
 def getNextMove(board, depth):
     """
-    _summary_: runner to get the best move from the board
+    Runner to get the best move from the board
 
     Args:
         board_obj (Board2048): The board itself
@@ -63,7 +63,7 @@ def getNextMove(board, depth):
 
 def expectiminimax(board, depth, playerTurn):
     """
-    _summary_: Runner for the expectiminimax function for 2048 
+    Runner for the expectiminimax function for 2048 
 
     Args:
         board_obj (Board2048): The board object itself
