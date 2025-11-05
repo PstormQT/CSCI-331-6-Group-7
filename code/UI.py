@@ -15,10 +15,7 @@ class UI:
         The starter for the game, init all of the component depend on the mode
 
         Args:
-            mode (int): What mode to run
-                        1: Manual
-                        2: ExpectiMinimax
-                        3: Monte Carlo 
+            mode (int): What mode to run... 1: Manual, 2: ExpectiMinimax, 3: Monte Carlo 
         """
         self.model = model.Board2048()
         for widget in self.root.winfo_children():
@@ -118,17 +115,12 @@ class UI:
         buttonRight = tk.Button(buttonFrame, text = "→", command = lambda : self.movementFunction(4),width=4,height=2,font=("Helvetica", 20, "bold"))
         buttonRight.grid(row = 1, column = 2)
 
-
     def movementFunction(self, direction: int):
         """
         Trigger the movement for the board
 
         Args:
-            direction (int): input for the movement
-                                1: Up
-                                2: Down
-                                3: Left
-                                4: Right
+            direction (int): input for the movement... 1: Up, 2: Down, 3: Left, 4: Right
         """
         self.model.playAction(direction)
         self.updateBoard()
@@ -155,7 +147,7 @@ class UI:
                 uiboard = self.currBoardUI[i][j]
                 uiboard.config(text=text, bg=self.get_color(value))
 
-    def get_color(self, value: int):
+    def get_color(self, value: int) -> str:
         """
         Getting the color value for the number
 
@@ -184,7 +176,6 @@ class UI:
             32768: "#7050d2"
         }
         return colors.get(value, "#3c3a32")
-
 
 if __name__ == "__main__":
     a = UI()

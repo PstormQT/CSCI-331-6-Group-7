@@ -4,7 +4,7 @@ import copy, random
 class Direction(Enum):
     """
     Class to represent the 4 directions of movement.\n
-    UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4.
+    1. UP, 2. DOWN, 3. LEFT, 4. RIGHT.
     """
     UP = 1
     DOWN = 2
