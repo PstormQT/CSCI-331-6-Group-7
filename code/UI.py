@@ -1,7 +1,6 @@
 import tkinter as tk
 import model
 import ai
-import time
 
 class UI:
     def __init__(self):
@@ -13,13 +12,10 @@ class UI:
         
     def start(self,mode: int):
         """
-        _summary_: The starter for the game, init all of the component depend on the mode
+        The starter for the game, init all of the component depend on the mode
 
         Args:
-            mode (int): What mode to run
-                        1: Manual
-                        2: ExpectiMinimax
-                        3: Monte Carlo 
+            mode (int): What mode to run... 1: Manual, 2: ExpectiMinimax, 3: Monte Carlo 
         """
         self.model = model.Board2048()
         for widget in self.root.winfo_children():
@@ -41,7 +37,7 @@ class UI:
 
     def runMiniMax(self):
         """
-        _summary_: Run the Minimax Simulation 
+        Run the Minimax Simulation 
         """
         if self.model.getGameOver():
             self.currentScore.config(text=f"GAME OVER, Score: {self.model.getScore()}")
@@ -56,7 +52,7 @@ class UI:
 
     def renderMode(self):
         """
-        _summary_: Spawning all of the input buttons for the game
+        Spawning all of the input buttons for the game
         """
         mode = tk.Frame(self.root)
         mode.grid(row = 0, column = 0, columnspan = 5)
@@ -76,7 +72,7 @@ class UI:
 
     def renderBoard(self):
         """
-        _summary_: Render the board itself
+        Render the board itself
         """
         board = self.model.getBoard()
         frame = tk.Frame(self.root, bg = "#000000")
@@ -102,7 +98,7 @@ class UI:
 
     def movementButtons(self):
         """
-        _summary_: Render the button for manual mode
+        Render the button for manual mode
         """
         buttonFrame = tk.Frame(self.root, bg = "#4287f5", padx= 20, pady = 20)
         buttonFrame.grid(row = 1, column = 4)
@@ -119,17 +115,12 @@ class UI:
         buttonRight = tk.Button(buttonFrame, text = "→", command = lambda : self.movementFunction(4),width=4,height=2,font=("Helvetica", 20, "bold"))
         buttonRight.grid(row = 1, column = 2)
 
-
     def movementFunction(self, direction: int):
         """
-        _summary_: Trigger the movement for the board
+        Trigger the movement for the board
 
         Args:
-            direction (int): input for the movement
-                                1: Up
-                                2: Down
-                                3: Left
-                                4: Right
+            direction (int): input for the movement... 1: Up, 2: Down, 3: Left, 4: Right
         """
         self.model.playAction(direction)
         self.updateBoard()
@@ -140,13 +131,13 @@ class UI:
 
     def updateScore(self):
         """
-        _summary_: Update the score for the UI
+        Update the score for the UI
         """
         self.currentScore.config(text = f"Current Score: {self.model.getScore()}")
 
     def updateBoard(self):
         """
-        _summary_: Update the board for the UI
+        Update the board for the UI
         """
         board = self.model.getBoard()
         for i in range(4):
@@ -156,9 +147,9 @@ class UI:
                 uiboard = self.currBoardUI[i][j]
                 uiboard.config(text=text, bg=self.get_color(value))
 
-    def get_color(self, value: int):
+    def get_color(self, value: int) -> str:
         """
-        _summary_: Getting the color value for the number
+        Getting the color value for the number
 
         Args:
             value (int): the integer to get the value
@@ -179,10 +170,12 @@ class UI:
             512: "#edc850",
             1024: "#edc53f",
             2048: "#edc22e",
-            4096: "#cbc3e3"
+            4096: "#66d56c",
+            8192: "#24C8B5",
+            16384: "#1D72C1",
+            32768: "#7050d2"
         }
         return colors.get(value, "#3c3a32")
-
 
 if __name__ == "__main__":
     a = UI()
