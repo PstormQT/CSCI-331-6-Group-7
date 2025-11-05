@@ -18,8 +18,9 @@ Team Members:
     We will use a modification of minimax (Expectiminimax) due to the nature of 2048. 
         Technically, there is only one actual player who is "playing the game", so to get 
         around this, we have set the max and min players as follows:
-        -   Max Node Player (MaxNP): Normal player who is sliding and merging tiles
-        -   Min Node Player (MinNP): The spawning of the 2048 tiles
+
+    -   Max Node Player (MaxNP): Normal player who is sliding and merging tiles
+    -   Min Node Player (MinNP): The spawning of the 2048 tiles
 
     With the randomness of the MinNP, Expectiminimax will be more optimal that all of 
     the value from all of the possible renerated node be considered equally to help 
