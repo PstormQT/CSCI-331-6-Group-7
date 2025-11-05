@@ -20,7 +20,7 @@ def getHeurisiticScore(board) -> int:
         board_obj (Board2048): The board for 2048
 
     Returns:
-        int: Score value on how identical of the current board to the perfect board
+        int: Heurisitic score value on how identical of the current board to the perfect board
     """
     board_heurisitic = 0
     grid = board.getBoard()
@@ -53,9 +53,9 @@ def getNextMove(board, depth):
             continue
 
         # Player's turn for each potenial input
-        score = expectiminimax(simBoard, depth - 1, False)
-        if score > bestScore:
-            bestScore = score
+        h_score = expectiminimax(simBoard, depth - 1, False)
+        if h_score > bestScore:
+            bestScore = h_score
             bestMove = dirVal
 
     return bestMove
@@ -71,7 +71,7 @@ def expectiminimax(board, depth, playerTurn):
         playerTurn (_type_): Is it player turn
 
     Returns:
-        int: the max score for that function
+        int: the max heurisitic score for that function
     """
 
     # Check if game over or depth = 0
@@ -91,11 +91,11 @@ def expectiminimax(board, depth, playerTurn):
             if not moved:
                 continue
             moveCheck = True
-            score = expectiminimax(sim, depth - 1, False)
-            if score > maxScore:
-                maxScore = score
+            h_score = expectiminimax(sim, depth - 1, False)
+            if h_score > maxScore:
+                maxScore = h_score
 
-        # Check if all future states are dead -> return raw score
+        # Check if all future states are dead -> return raw heurisitic score
         if not moveCheck:
             return getHeurisiticScore(board)
         return maxScore
