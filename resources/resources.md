@@ -11,3 +11,9 @@
 ## Monte Carlo 
 - https://www.geeksforgeeks.org/machine-learning/ml-monte-carlo-tree-search-mcts/
 - https://en.wikipedia.org/wiki/Monte_Carlo_tree_search
+- https://www.youtube.com/watch?v=Fbs4lnGLS8M
+- https://www.youtube.com/watch?v=UXW2yZndl7U
+- https://www.youtube.com/watch?v=62nq4Zsn8vc&t=1017s
+- https://www.youtube.com/watch?v=BEFY7IHs0HM&t=556s
+- https://stackoverflow.com/questions/57359229/ucb-formula-for-monte-carlo-tree-search-when-score-is-between-0-and-n
+- https://www.chessprogramming.org/UCT
