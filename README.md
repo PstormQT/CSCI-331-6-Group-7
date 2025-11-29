@@ -28,8 +28,6 @@ Team Members:
 
 2. Monte Carlo Tree Search 
 
-    ~~Peter is still doing research on this but this is his understand in general~~
-
     Monte Carlo Search Tree is a search method similar to the Expectiminimax with an 
     emphasis on only expanding on the best state. 
         

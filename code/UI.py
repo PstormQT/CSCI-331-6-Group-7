@@ -1,9 +1,12 @@
 import tkinter as tk
 import model
 import ai
+import montecarlo
 
 class UI:
     SEARCH_DEPTH = 3
+    MONTE_CARLO_SIMULATION_COUNT = 500
+    MONTE_CARLO_SIMULATION_DEPTH = 500
 
     def __init__(self):
         self.model = model.Board2048()
@@ -34,8 +37,29 @@ class UI:
             self.renderMode()
             self.renderBoard()
             self.runMiniMax()
-            
+
+        elif mode == 3:
+            self.renderMode()
+            self.renderBoard()
+            self.runMonteCarlo()
+        
         self.root.mainloop()
+
+
+    def runMonteCarlo(self):
+        """
+        _summary_: Run the Monte Carlo tree search
+        """
+        if self.model.getGameOver():
+            self.currentScore.config(text=f"GAME OVER, Score: {self.model.getScore()}")
+            return
+
+        # Search Monte carlo tree search with 100 simulation with 100 depth
+        nextMove = montecarlo.getBestMove(self.model, self.MONTE_CARLO_SIMULATION_COUNT, self.MONTE_CARLO_SIMULATION_DEPTH)
+        self.movementFunction(nextMove)
+
+        # Running at max speed (timing out at 10ms)
+        self.root.after(10, self.runMiniMax)
 
     def runMiniMax(self):
         """
@@ -65,7 +89,7 @@ class UI:
         AImode1 = tk.Button(mode, height=5, width=20, text="AI Mode 1\nExpectiminimax", command = lambda : self.start(2))
         AImode1.grid(row=0, column=2, padx=5, pady=5)
 
-        AImode2 = tk.Button(mode, height=5, width=20, text="AI Mode 2\nMonte Carlo Search Tree\nIn development")
+        AImode2 = tk.Button(mode, height=5, width=20, text="AI Mode 2\nMonte Carlo Search Tree", command = lambda : self.start(3))
         AImode2.grid(row=0, column=3, padx=5, pady=5)
 
         self.currentScore = tk.Label(mode, height = 5, width = 20, text = f"Current Score: {self.model.getScore()}")
