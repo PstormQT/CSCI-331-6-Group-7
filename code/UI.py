@@ -5,8 +5,8 @@ import montecarlo as mc
 
 class UI:
     SEARCH_DEPTH = 4
-    MONTE_CARLO_SIMULATION_COUNT = 500
-    MONTE_CARLO_SIMULATION_DEPTH = 500
+    MONTE_CARLO_SIMULATION_COUNT = 100
+    MONTE_CARLO_SIMULATION_DEPTH = 50
 
     def __init__(self):
         self.model = model.Board2048()
@@ -59,7 +59,7 @@ class UI:
         self.movementFunction(nextMove)
 
         # Running at max speed (timing out at 10ms)
-        self.root.after(10, self.runMiniMax)
+        self.root.after(10, self.runMonteCarlo)
 
     def runMiniMax(self):
         """
