@@ -1,10 +1,10 @@
 import tkinter as tk
 import model
-import ai
-import montecarlo
+import expectiminimax as emm
+import montecarlo as mc
 
 class UI:
-    SEARCH_DEPTH = 3
+    SEARCH_DEPTH = 4
     MONTE_CARLO_SIMULATION_COUNT = 500
     MONTE_CARLO_SIMULATION_DEPTH = 500
 
@@ -48,14 +48,14 @@ class UI:
 
     def runMonteCarlo(self):
         """
-        _summary_: Run the Monte Carlo tree search
+        Run the Monte Carlo tree search
         """
         if self.model.getGameOver():
             self.currentScore.config(text=f"GAME OVER, Score: {self.model.getScore()}")
             return
 
         # Search Monte carlo tree search with 100 simulation with 100 depth
-        nextMove = montecarlo.getBestMove(self.model, self.MONTE_CARLO_SIMULATION_COUNT, self.MONTE_CARLO_SIMULATION_DEPTH)
+        nextMove = mc.getBestMove(self.model, self.MONTE_CARLO_SIMULATION_COUNT, self.MONTE_CARLO_SIMULATION_DEPTH)
         self.movementFunction(nextMove)
 
         # Running at max speed (timing out at 10ms)
@@ -70,7 +70,7 @@ class UI:
             return
 
         # Search Tree depth of 3
-        nextMove = ai.getNextMove(self.model, self.SEARCH_DEPTH)
+        nextMove = emm.getNextMove(self.model, self.SEARCH_DEPTH)
         self.movementFunction(nextMove)
 
         # Running at max speed (timing out at 10ms)

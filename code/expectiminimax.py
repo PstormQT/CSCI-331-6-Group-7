@@ -11,7 +11,6 @@ PERFECT_SNAKE = [
     [2**0,  2**1,  2**2,  2**3]
 ]
 
-
 def getHeurisiticScore(board) -> int:
     """
     Scoring function of how the current board from the perfect game
@@ -52,14 +51,13 @@ def getNextMove(board, depth):
         if not moved:
             continue
 
-        # Player's turn for each potenial input
+        # Player's turn for each potential input
         h_score = expectiminimax(simBoard, depth - 1, False)
         if h_score > bestScore:
             bestScore = h_score
             bestMove = dirVal
 
     return bestMove
-
 
 def expectiminimax(board, depth, playerTurn):
     """

@@ -4,9 +4,6 @@ import math
 import random
 from node import MonteCarloNode
 
-
-
-
 def getAllLegalMove(model: model.Board2048):
     moves = []
     for direction in range(1,5):
@@ -14,12 +11,11 @@ def getAllLegalMove(model: model.Board2048):
         ifChange = boardCopy.move(direction)
         if ifChange:
             moves.append(direction)
-
     return moves
-    
+
 def expand(node: MonteCarloNode) -> MonteCarloNode:
     """
-    _summary_: The expandsion state for the Monte Carlo Tree search
+    The expansion state for the Monte Carlo Tree search
     Expand 1 of the children node for the game
 
     Args:
@@ -28,7 +24,7 @@ def expand(node: MonteCarloNode) -> MonteCarloNode:
 
     Returns:
         MonteCarloNode: The next generation for the leaf node, None if 
-        there are not one avaliable
+        there are not one available
     """
 
     # Check if current state is dead
@@ -57,14 +53,13 @@ def expand(node: MonteCarloNode) -> MonteCarloNode:
     node.children[action] = child
     return child
 
-
 def getBestChild(node: MonteCarloNode) -> MonteCarloNode:
     """
-    _summary_: Getting the best child using the UCT
+    Getting the best child using the UCT
 
     UCT = Xj + C * (sqrt(ln(n) / nj))
 
-    Use https://www.chessprogramming.org/UCT for variable explaination
+    Use https://www.chessprogramming.org/UCT for variable explanation
 
     Args:
         node (MonteCarloNode): Best Children to expand using UCT score
@@ -91,14 +86,13 @@ def getBestChild(node: MonteCarloNode) -> MonteCarloNode:
 
     return bestAction, bestChild
 
-
 def rollout(state: model.Board2048, limit = 50) -> int:
     """
-    _summary_: Single rollout state for the monte carlo tree search.
+    Single rollout state for the monte carlo tree search.
 
     Args:
-        state (model.Board2048): current baord state
-        limit (int, optional): limit of how many interation to run. Defaults to 50.
+        state (model.Board2048): current board state
+        limit (int, optional): limit of how many iterations to run. Defaults to 50.
 
     Returns:
         int: the current score improvement of the board after the simulation
@@ -121,9 +115,10 @@ def rollout(state: model.Board2048, limit = 50) -> int:
 
     return sim.getScore() - startScore
 
+
 def backpropagate(node: MonteCarloNode, reward: float) -> None:
     """
-    _summary_: Update the reward for the new node
+    Update the reward for the new node
 
     Args:
         node (MonteCarloNode): _description_
@@ -135,10 +130,11 @@ def backpropagate(node: MonteCarloNode, reward: float) -> None:
         curr.totalWeight += reward
         curr = curr.parent
 
+
 def getNodeForRollout(root: MonteCarloNode) -> MonteCarloNode:
     """
-    _summary_: Get the node for rolling out for MonteCarlo
-    Combination for Tree Traveral and expansion
+    Get the node for rolling out for MonteCarlo
+    Combination for Tree Traversal and expansion
 
     Args:
         root (MonteCarloNode): Root Node for the MonteCarlo tree
@@ -161,9 +157,10 @@ def getNodeForRollout(root: MonteCarloNode) -> MonteCarloNode:
 
     return curr
 
+
 def getBestActionRoot(root: MonteCarloNode) -> int:
     """
-    _summary_: Getting the best action from the root node
+    Getting the best action from the root node
 
     Args:
         root (MonteCarloNode): Root node of the monte carlo tree
@@ -188,7 +185,7 @@ def getBestActionRoot(root: MonteCarloNode) -> int:
 
 def getBestMove(model: model.Board2048, simulationCount : int = 100, simulationDepth : int = 50) -> int:
     """
-    _summary_: Getting the next move for the 2048 using MonteCarco tree search
+    Getting the next move for the 2048 using MonteCarco tree search
 
     Args:
         model (model.Board2048): _description_

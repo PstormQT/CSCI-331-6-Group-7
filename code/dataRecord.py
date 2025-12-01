@@ -1,5 +1,5 @@
 import model
-import ai
+import expectiminimax as emm
 import montecarlo
 import time
 
@@ -20,14 +20,12 @@ with open("dataReportMinimax.csv", "w") as file:
         
         minimaxModel = model.Board2048()
         while not minimaxModel.getGameOver():
-            moveMinimax = ai.getNextMove(minimaxModel, SEARCH_DEPTH)
+            moveMinimax = emm.getNextMove(minimaxModel, SEARCH_DEPTH)
             minimaxModel.playAction(moveMinimax)
         minimaxScore = minimaxModel.getScore()
         end = time.perf_counter()
         elapsed_time = end - start
         file.write(f"{minimaxScore}, {elapsed_time:.4f}")
-
-
 
 with open("dataReportMonteCarlo.csv", "w") as file:
     for x in range(1):
@@ -42,6 +40,3 @@ with open("dataReportMonteCarlo.csv", "w") as file:
         end = time.perf_counter()
         elapsed_time = end - start
         file.write(f"{MonteCarloScore}, {elapsed_time:.4f}")
-
-
-
