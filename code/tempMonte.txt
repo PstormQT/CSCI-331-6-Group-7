@@ -4,6 +4,32 @@ import math
 import random
 from node import MonteCarloNode
 
+PERFECT_SNAKE = [
+    [2**15, 2**14, 2**13, 2**12],
+    [2**8,  2**9,  2**10, 2**11],
+    [2**7,  2**6,  2**5,  2**4],
+    [2**0,  2**1,  2**2,  2**3]
+]
+
+def getHeurisiticScore(board) -> int:
+    """
+    Scoring function of how the current board from the perfect game
+
+    Args:
+        board_obj (Board2048): The board for 2048
+
+    Returns:
+        int: Heurisitic score value on how identical of the current board to the perfect board
+    """
+    board_heurisitic = 0
+    grid = board.getBoard()
+    size = board.MAX_BOARD_DIMENSION
+    for i in range(size):
+        for j in range(size):
+            board_heurisitic += grid[i][j] * PERFECT_SNAKE[i][j]
+    return board_heurisitic 
+
+
 def getAllLegalMove(model: model.Board2048):
     moves = []
     for direction in range(1,5):
@@ -99,21 +125,18 @@ def rollout(state: model.Board2048, limit = 50) -> int:
     """
 
     sim = copy.deepcopy(state)
-    startScore = sim.getScore()
-
     runCt = 0
 
     while not sim.getGameOver() and runCt < limit:
         possibleMove = getAllLegalMove(sim)
-        
-        if possibleMove == []:
+        if not possibleMove:
             break
 
         action = random.choice(possibleMove)
         sim.playAction(action)
         runCt += 1
 
-    return sim.getScore() - startScore
+    return math.log2(getHeurisiticScore(sim) + 1) / 17
 
 
 def backpropagate(node: MonteCarloNode, reward: float) -> None:
@@ -151,7 +174,9 @@ def getNodeForRollout(root: MonteCarloNode) -> MonteCarloNode:
             return curr
         
         if set(moves) - set(curr.children):
-            return expand(curr) or curr
+            expanded = expand(curr)
+            if expanded is not None:
+                return expanded
 
         action, curr = getBestChild(curr)
 

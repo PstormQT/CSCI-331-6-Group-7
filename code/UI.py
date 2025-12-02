@@ -6,7 +6,7 @@ import montecarlo as mc
 class UI:
     SEARCH_DEPTH = 4
     MONTE_CARLO_SIMULATION_COUNT = 100
-    MONTE_CARLO_SIMULATION_DEPTH = 50
+    MONTE_CARLO_SIMULATION_DEPTH = 100
 
     def __init__(self):
         self.model = model.Board2048()
@@ -17,7 +17,7 @@ class UI:
         
     def start(self,mode: int):
         """
-        The starter for the game, init all of the component depend on the mode
+        The starter for the game, init all of the component depend on the 5mode
 
         Args:
             mode (int): What mode to run... 1: Manual, 2: ExpectiMinimax, 3: Monte Carlo 
