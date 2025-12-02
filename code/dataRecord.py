@@ -12,7 +12,7 @@ SEARCH_DEPTH = 3
 MONTE_CARLO_SIMULATION_COUNT = 200
 MONTE_CARLO_SIMULATION_DEPTH = 200
 
-with open("dataReportMinimax.csv", "w") as file:
+with open("data/dataReportMinimax.csv", "w") as file:
     for x in range(1):
         start = time.perf_counter()
         minimaxScore = -1
@@ -27,7 +27,7 @@ with open("dataReportMinimax.csv", "w") as file:
         elapsed_time = end - start
         file.write(f"{minimaxScore}, {elapsed_time:.4f}")
 
-with open("dataReportMonteCarlo.csv", "w") as file:
+with open("data/dataReportMonteCarlo.csv", "w") as file:
     for x in range(1):
         start = time.perf_counter()
         MonteCarloScore = -1
