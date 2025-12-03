@@ -8,8 +8,7 @@ def getAllLegalMove(model: model.Board2048):
     moves = []
     for direction in range(1,5):
         boardCopy = copy.deepcopy(model)
-        boardCopy.playAction(direction)
-        if not boardCopy.game_over:
+        if boardCopy.move(direction):
             moves.append(direction)
     return moves
 
@@ -69,22 +68,34 @@ def getBestChild(node: MonteCarloNode) -> MonteCarloNode:
     bestAction = None
     bestChild = None
 
+    C = 1.414
+
+    # Prevent log(0)
+    parent_visits = max(1, node.visitCount)
+
     for action, child in node.children.items():
-        # Haven't visit yet
+
+        # If never visited — force exploration
         if child.visitCount == 0:
             UCTScore = float("inf")
         else:
-            current = child.totalWeight / child.visitCount
-            explorationWeight = math.sqrt(2) * math.sqrt(math.log(node.visitCount) / child.visitCount)
+            # --- Normalized reward (VERY important for 2048) ---
+            # Replace with your reward range if needed
+            avg_reward = child.totalWeight / child.visitCount
+            norm_reward = avg_reward / 1000.0      # ← NORMALIZATION FIX
+            
+            # --- UCT exploration term ---
+            exploration = C * math.sqrt(math.log(parent_visits) / child.visitCount)
 
-            UCTScore = current + explorationWeight
-        
+            UCTScore = norm_reward + exploration
+
         if UCTScore > bestScore:
             bestScore = UCTScore
             bestAction = action
             bestChild = child
 
     return bestAction, bestChild
+
 
 def rollout(state: model.Board2048, limit = 50) -> int:
     """
@@ -169,8 +180,8 @@ def getBestActionRoot(root: MonteCarloNode) -> int:
         int: direction for the movement
     """
 
-    if not root.children:
-        return None
+    # if not root.children:
+    #     return None
     
     bestAction = None
     bestVisit = -1
@@ -199,6 +210,7 @@ def getBestMove(model: model.Board2048, simulationCount : int = 100, simulationD
     root = MonteCarloNode(rootState)
 
     if rootState.getGameOver():
+        print("check")
         return None
     
     for i in range(simulationCount):

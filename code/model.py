@@ -91,7 +91,7 @@ class Board2048:
             bool: If the board changed after trying to move the pieces.
         """
         if self.game_over:
-            print(f"The game is over. Your prior score was {self.score}. You cannot move anymore.")
+            # print(f"The game is over. Your prior score was {self.score}. You cannot move anymore.")
             return False
 
         original_board = copy.deepcopy(self.board)
