@@ -14,8 +14,19 @@ class UI:
         self.root.title("2048 with AI")
         self.currBoardUI = []
         self.currentScore = None
+        self.stopAI = False
+    
+    def restart(self, mode: int):
+        """
+        Restarts the GUI for a different game mode.
         
-    def start(self,mode: int):
+        Args:
+            mode (int): What mode to run... 1: Manual, 2: ExpectiMinimax, 3: Monte Carlo 
+        """
+        self.stopAI = True
+        self.root.after(10, lambda: (setattr(self, "stopAI", False), self.start(mode)))
+
+    def start(self, mode: int):
         """
         The starter for the game, init all of the component depend on the 5mode
 
@@ -27,29 +38,25 @@ class UI:
             widget.destroy()
         self.currBoardUI = []
 
-        # Manual Mode
+        self.renderMode()
+        self.renderBoard()
+
         if mode == 1:
-            self.renderMode()
-            self.renderBoard()
-            self.movementButtons()
-
+            self.movementButtons() # Manual Mode
         elif mode == 2:
-            self.renderMode()
-            self.renderBoard()
-            self.runMiniMax()
-
+            self.runMiniMax() # Expectiminmax
         elif mode == 3:
-            self.renderMode()
-            self.renderBoard()
-            self.runMonteCarlo()
+            self.runMonteCarlo() # Monte Carlo
         
         self.root.mainloop()
-
 
     def runMonteCarlo(self):
         """
         Run the Monte Carlo tree search
         """
+        if self.stopAI:
+            return
+
         if self.model.getGameOver():
             self.currentScore.config(text=f"GAME OVER, Score: {self.model.getScore()}")
             return
@@ -65,6 +72,9 @@ class UI:
         """
         Run the Minimax Simulation 
         """
+        if self.stopAI:
+            return
+
         if self.model.getGameOver():
             self.currentScore.config(text=f"GAME OVER, Score: {self.model.getScore()}")
             return
@@ -83,13 +93,13 @@ class UI:
         mode = tk.Frame(self.root)
         mode.grid(row = 0, column = 0, columnspan = 5)
 
-        reset = tk.Button(mode, height=5, width=20, text="Manual Playing", command = lambda : self.start(1))
+        reset = tk.Button(mode, height=5, width=20, text="Manual Playing", command = lambda : self.restart(1))
         reset.grid(row=0, column=1, padx=5, pady=5)
 
-        AImode1 = tk.Button(mode, height=5, width=20, text="AI Mode 1\nExpectiminimax", command = lambda : self.start(2))
+        AImode1 = tk.Button(mode, height=5, width=20, text="AI Mode 1\nExpectiminimax", command = lambda : self.restart(2))
         AImode1.grid(row=0, column=2, padx=5, pady=5)
 
-        AImode2 = tk.Button(mode, height=5, width=20, text="AI Mode 2\nMonte Carlo Search Tree", command = lambda : self.start(3))
+        AImode2 = tk.Button(mode, height=5, width=20, text="AI Mode 2\nMonte Carlo Search Tree", command = lambda : self.restart(3))
         AImode2.grid(row=0, column=3, padx=5, pady=5)
 
         self.currentScore = tk.Label(mode, height = 5, width = 20, text = f"Current Score: {self.model.getScore()}")

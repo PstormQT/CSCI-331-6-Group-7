@@ -1,19 +1,28 @@
 # CSCI-331-6-Group-7
 GitHub for the AI class
 
-
 ## Overview
 We will be implementing an AI agent to play the 2048 game with 2 different algorithms:
 1. Expectiminimax - A modification of minimax with a change to take account into the randomness
 2. Monte Carlo tree search - Search Tree that emphasis on expanding the best possible state
 
 Team Members:
-- Peter Dang
-- Katie Richardson
-- Nathan Russo
+- Peter Dang: UI and Monte Carlo
+- Katie Richardson: Expectiminmax
+- Nathan Russo: Model and Review
 
-## Artificial Intelligence Implementation Techniques:
-1. Expectiminimax with Alpha - Beta Pruning
+## How to play
+0. Verify you have installed all dependencies in requirements.txt.
+1. Run UI.py to play 2048 or test the AI search algorithms.
+    1. Click "Manual Playing" to play normally using the d-pad.
+    2. Click "AI Mode 1" to watch the Expectiminmax algorithm attempt to solve 2048.
+    3. Click "AI Mode 2" to watch the Monte Carlo algorithm attempt to solve 2048.
+2. Run dataRecord.py to analyze our AI search algorithms.
+    1. Results for Expectiminmax are found under data in dataReportMinimax.csv.
+    2. Results for Monte Carlo are found under data in dataReportMonteCarlo.csv.
+
+## Artificial Intelligence Implementation Techniques
+1. Expectiminimax
 
     We will use a modification of minimax (Expectiminimax) due to the nature of 2048. 
         Technically, there is only one actual player who is "playing the game", so to get 
@@ -22,10 +31,6 @@ Team Members:
     -   Max Node Player (MaxNP): Normal player who is sliding and merging tiles
     -   Min Node Player (MinNP): The spawning of the 2048 tiles
 
-    With the randomness of the MinNP, Expectiminimax will be more optimal that all of 
-    the value from all of the possible renerated node be considered equally to help 
-    mimic the randomness nature of the tile spawning the tiles in 2048.
-
 2. Monte Carlo Tree Search 
 
     Monte Carlo Search Tree is a search method similar to the Expectiminimax with an 
@@ -33,17 +38,3 @@ Team Members:
         
     This will run faster and deeper comparing to Expectiminimax due to it doesn't have to
     expand the node that is less valuable
-
-## Resource used
-1. 2048 Game in general 
-    -   https://classic.play2048.co/
-
-2. Expectiminimax
-    -   https://youtu.be/0fOLkZJ-Q6I?si=xEpKZ95S0Lz_9jlZ
-    -   https://github.com/mschrandt/2048
-    -   https://stackoverflow.com/questions/22342854/what-is-the-optimal-algorithm-for-the-game-2048
-    -   https://inst.eecs.berkeley.edu/~cs188/textbook/games/expectimax.html
-
-3. Monte Carlo Search tree
-    -   https://www.geeksforgeeks.org/machine-learning/ml-monte-carlo-tree-search-mcts/
-    -   https://en.wikipedia.org/wiki/Monte_Carlo_tree_search

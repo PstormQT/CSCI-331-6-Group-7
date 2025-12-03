@@ -1,5 +1,5 @@
 # 2048 Resources
-## 2028 Game Example
+## 2048 Game Example
 - https://classic.play2048.co/
 
 ## Expectiminmax

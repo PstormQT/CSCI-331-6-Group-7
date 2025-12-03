@@ -1,0 +1,2 @@
+You must have python to run this 2048.
+You must also have tkinter installed in your python.
