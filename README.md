@@ -24,17 +24,17 @@ Team Members:
 ## Artificial Intelligence Implementation Techniques
 1. Expectiminimax
 
-    We will use a modification of minimax (Expectiminimax) due to the nature of 2048. 
-        Technically, there is only one actual player who is "playing the game", so to get 
-        around this, we have set the max and min players as follows:
+    It is a a modification of minimax that takes into account randomness.
 
-    -   Max Node Player (MaxNP): Normal player who is sliding and merging tiles
-    -   Min Node Player (MinNP): The spawning of the 2048 tiles
+    -   Max Player (MaxP): Normal player who is sliding and merging tiles. 
+    -   Min Player (MinP): The spawning of the 2 and 4 tiles.
 
 2. Monte Carlo Tree Search 
 
-    Monte Carlo Search Tree is a search method similar to the Expectiminimax with an 
-    emphasis on only expanding on the best state. 
-        
-    This will run faster and deeper comparing to Expectiminimax due to it doesn't have to
-    expand the node that is less valuable
+    It is a search tree algorithm that uses simulations of the game board to approximate the best move.
+
+    MCTS works on 4 general steps repeated in order:
+    1. Select
+    2. Expand
+    3. Simulation
+    4. Backpropagation
