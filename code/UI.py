@@ -28,7 +28,7 @@ class UI:
 
     def start(self, mode: int):
         """
-        The starter for the game, init all of the component depend on the 5mode
+        The starter for the game, init all of the component depend on the mode
 
         Args:
             mode (int): What mode to run... 1: Manual, 2: ExpectiMinimax, 3: Monte Carlo 
@@ -44,7 +44,7 @@ class UI:
         if mode == 1:
             self.movementButtons() # Manual Mode
         elif mode == 2:
-            self.runMiniMax() # Expectiminmax
+            self.runMiniMax() # Expectiminimax
         elif mode == 3:
             self.runMonteCarlo() # Monte Carlo
         
