@@ -56,9 +56,12 @@ def getBestChild(node: MonteCarloNode) -> MonteCarloNode:
     """
     Getting the best child using the UCT
 
-    UCT = Xj + C * (sqrt(ln(n) / nj))
+    UCB1 = (Xj / nj / 1000) + C * (sqrt(ln(n) / nj))
 
-    Use https://www.chessprogramming.org/UCT for variable explanation
+    Xj: Total reward of the child node
+    nj: Visit count of the child node
+    n: Visit count of the parent node
+    C: Exploration balancer (sqrt(2)))
 
     Args:
         node (MonteCarloNode): Best Children to expand using UCT score
@@ -70,21 +73,16 @@ def getBestChild(node: MonteCarloNode) -> MonteCarloNode:
 
     C = 1.414
 
-    # Prevent log(0)
     parent_visits = max(1, node.visitCount)
 
     for action, child in node.children.items():
 
-        # If never visited — force exploration
         if child.visitCount == 0:
             UCTScore = float("inf")
         else:
-            # --- Normalized reward (VERY important for 2048) ---
-            # Replace with your reward range if needed
             avg_reward = child.totalWeight / child.visitCount
-            norm_reward = avg_reward / 1000.0      # ← NORMALIZATION FIX
-            
-            # --- UCT exploration term ---
+            norm_reward = avg_reward / 1000.0
+
             exploration = C * math.sqrt(math.log(parent_visits) / child.visitCount)
 
             UCTScore = norm_reward + exploration

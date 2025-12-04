@@ -10,21 +10,21 @@ Minimax with depth of 3
 Monte Carlo Tree Search with Search depth of 200 and 200 Simulation
 """
 
-# for SEARCH_DEPTH in [2,3,4]:
-#     with open(f"expectiminimax/dataReportMinimax{SEARCH_DEPTH}.csv", "w") as file:
-#         for x in range(100):
-#             start = time.perf_counter()
-#             minimaxScore = -1
-#             minimaxModel = model.Board2048()
-#             while not minimaxModel.getGameOver():
-#                 moveMinimax = emm.getNextMove(minimaxModel, SEARCH_DEPTH)
-#                 minimaxModel.playAction(moveMinimax)
-#             minimaxScore = minimaxModel.getScore()
-#             end = time.perf_counter()
-#             elapsed_time = end - start
-#             file.write(f"{minimaxScore}, {elapsed_time:.4f}\n")
+for SEARCH_DEPTH in [2,3,4,5]:
+    with open(f"expectiminimax/dataReportMinimax{SEARCH_DEPTH}.csv", "w") as file:
+        for x in range(100):
+            start = time.perf_counter()
+            minimaxScore = -1
+            minimaxModel = model.Board2048()
+            while not minimaxModel.getGameOver():
+                moveMinimax = emm.getNextMove(minimaxModel, SEARCH_DEPTH)
+                minimaxModel.playAction(moveMinimax)
+            minimaxScore = minimaxModel.getScore()
+            end = time.perf_counter()
+            elapsed_time = end - start
+            file.write(f"{minimaxScore}, {elapsed_time:.4f}\n")
 
-for sim_count in [10,25,40,50,75,100]:
+for sim_count in [100,150,200]:
     with open(f"montecarlo/dataReportMonteCarlo{sim_count}.csv", "w") as file:
         for trial in range(100):
             start = time.perf_counter()
