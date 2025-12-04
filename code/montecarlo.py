@@ -194,7 +194,7 @@ def getBestActionRoot(root: MonteCarloNode) -> int:
 
 def getBestMove(model: model.Board2048, simulationCount : int = 100, simulationDepth : int = 50) -> int:
     """
-    Getting the next move for the 2048 using MonteCarco tree search
+    Getting the next move for the 2048 using MonteCarlo tree search
 
     Args:
         model (model.Board2048): _description_
