@@ -6,7 +6,7 @@ import montecarlo as mc
 class UI:
     SEARCH_DEPTH = 4
     MONTE_CARLO_SIMULATION_COUNT = 100
-    MONTE_CARLO_SIMULATION_DEPTH = 50
+    MONTE_CARLO_SIMULATION_DEPTH = 100
 
     def __init__(self):
         self.model = model.Board2048()
@@ -44,7 +44,7 @@ class UI:
         if mode == 1:
             self.movementButtons() # Manual Mode
         elif mode == 2:
-            self.runMiniMax() # Expectiminmax
+            self.runMiniMax() # Expectiminimax
         elif mode == 3:
             self.runMonteCarlo() # Monte Carlo
         

@@ -8,8 +8,7 @@ def getAllLegalMove(model: model.Board2048):
     moves = []
     for direction in range(1,5):
         boardCopy = copy.deepcopy(model)
-        ifChange = boardCopy.move(direction)
-        if ifChange:
+        if boardCopy.move(direction):
             moves.append(direction)
     return moves
 
@@ -57,9 +56,12 @@ def getBestChild(node: MonteCarloNode) -> MonteCarloNode:
     """
     Getting the best child using the UCT
 
-    UCT = Xj + C * (sqrt(ln(n) / nj))
+    UCB1 = (Xj / nj / 1000) + C * (sqrt(ln(n) / nj))
 
-    Use https://www.chessprogramming.org/UCT for variable explanation
+    Xj: Total reward of the child node
+    nj: Visit count of the child node
+    n: Visit count of the parent node
+    C: Exploration balancer (sqrt(2)))
 
     Args:
         node (MonteCarloNode): Best Children to expand using UCT score
@@ -69,22 +71,29 @@ def getBestChild(node: MonteCarloNode) -> MonteCarloNode:
     bestAction = None
     bestChild = None
 
+    C = 1.414
+
+    parent_visits = max(1, node.visitCount)
+
     for action, child in node.children.items():
-        # Haven't visit yet
+
         if child.visitCount == 0:
             UCTScore = float("inf")
         else:
-            current = child.totalWeight / child.visitCount
-            explorationWeight = math.sqrt(2) * math.sqrt(math.log(node.visitCount) / child.visitCount)
+            avg_reward = child.totalWeight / child.visitCount
+            norm_reward = avg_reward / 1000.0
 
-            UCTScore = current + explorationWeight
-        
+            exploration = C * math.sqrt(math.log(parent_visits) / child.visitCount)
+
+            UCTScore = norm_reward + exploration
+
         if UCTScore > bestScore:
             bestScore = UCTScore
             bestAction = action
             bestChild = child
 
     return bestAction, bestChild
+
 
 def rollout(state: model.Board2048, limit = 50) -> int:
     """
@@ -169,8 +178,8 @@ def getBestActionRoot(root: MonteCarloNode) -> int:
         int: direction for the movement
     """
 
-    if not root.children:
-        return None
+    # if not root.children:
+    #     return None
     
     bestAction = None
     bestVisit = -1
@@ -185,7 +194,7 @@ def getBestActionRoot(root: MonteCarloNode) -> int:
 
 def getBestMove(model: model.Board2048, simulationCount : int = 100, simulationDepth : int = 50) -> int:
     """
-    Getting the next move for the 2048 using MonteCarco tree search
+    Getting the next move for the 2048 using MonteCarlo tree search
 
     Args:
         model (model.Board2048): _description_
@@ -199,6 +208,7 @@ def getBestMove(model: model.Board2048, simulationCount : int = 100, simulationD
     root = MonteCarloNode(rootState)
 
     if rootState.getGameOver():
+        print("check")
         return None
     
     for i in range(simulationCount):
